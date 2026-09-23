@@ -11,6 +11,40 @@ business, scaffolded so the real implementation can be layered in without restru
 > The detailed product specification this was built from is private; section references (§3, §7, §28…)
 > in the code point at it.
 
+## Screens
+
+All data below is seeded and fictional (a demo real-estate agency in Miami).
+
+**The platform — one core, many vertical packs**
+![Platform overview](docs/screenshots/01-platform.png)
+
+**Onboarding builds the Business Brain** — a guided interview turns the owner's answers into structured,
+source-tagged facts, ending in a launch-readiness checklist rather than a vanity score.
+![Onboarding](docs/screenshots/02-onboarding.png)
+
+**Business Brain** — every fact carries its source and status (owner-verified, imported, AI draft,
+pending confirmation, stale). Volatile facts such as price and availability expire on a freshness rule.
+![Business Brain](docs/screenshots/03-business-brain.png)
+
+**Live conversation** — a returning customer's WhatsApp voice note runs through the universal agent
+pipeline: transcription, customer recognition, Brain + memory retrieval, inventory matching (stale
+listings withheld), permission check, calendar booking, then escalation to a human agent. The CRM on
+the right updates as it happens.
+![Live conversation](docs/screenshots/04-live-conversation.png)
+
+**CRM** — leads, stages and next actions maintained by the agent, with a memory timeline and the
+handoff briefing sent to the assigned agent.
+![CRM](docs/screenshots/05-crm.png)
+
+**Activity feed & audit trail** — every action expands to its evidence and full audit record: trigger,
+context used, Brain sources, tool, arguments, result and approval status.
+![Activity and audit](docs/screenshots/06-activity-audit.png)
+
+**Approvals** — restricted actions (price changes, publishing a page) are prepared with exact diffs and
+evidence, then wait for the owner. Human-only actions such as accepting an offer can't be executed by
+the AI at all.
+![Approvals](docs/screenshots/07-approvals.png)
+
 ## Quick start (no Docker)
 
 Requires Node 20+ and pnpm 9 (`corepack enable`, or `npm i -g pnpm@9`).
