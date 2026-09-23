@@ -1,0 +1,65 @@
+# OPTIONAL for the pitch. `pnpm dev` runs the full demo with no Docker at all.
+#
+# postgres  — home for the real Brain / Customer Memory / CRM once DataStore gets a Postgres
+#             implementation (backend/src/data/postgres). Draft schema auto-applied on first boot.
+# redis     — Socket.IO pub/sub between the chat demo and CRM/activity panels (redis adapter),
+#             later session/cache and workflow queues.
+# backend   — same code as `pnpm dev:backend`. USE_MOCK_DATA stays true until PostgresStore exists.
+# frontend is intentionally NOT containerised: run `pnpm dev:frontend`.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: mygpt-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-mygpt}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mygpt}
+      POSTGRES_DB: ${POSTGRES_DB:-mygpt_dev}
+    ports:
+      - "${POSTGRES_HOST_PORT:-5433}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/db/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-mygpt} -d ${POSTGRES_DB:-mygpt_dev}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: mygpt-redis
+    ports:
+      - "${REDIS_HOST_PORT:-6380}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mygpt-backend
+    environment:
+      NODE_ENV: development
+      PORT: 4000
+      USE_MOCK_DATA: ${USE_MOCK_DATA:-true}
+      ENABLE_REDIS_ADAPTER: "true"
+      DATABASE_URL: postgresql://${POSTGRES_USER:-mygpt}:${POSTGRES_PASSWORD:-mygpt}@postgres:5432/${POSTGRES_DB:-mygpt_dev}
+      REDIS_URL: redis://redis:6379
+    ports:
+      - "${BACKEND_HOST_PORT:-4000}:4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:

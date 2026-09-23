@@ -1,0 +1,21 @@
+{
+  "name": "mygpt-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MyGPT — universal AI employee platform (pitch mock, step one)",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --stream --filter @mygpt/backend --filter @mygpt/frontend dev",
+    "dev:backend": "pnpm --filter @mygpt/backend dev",
+    "dev:frontend": "pnpm --filter @mygpt/frontend dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "start": "pnpm --parallel --stream --filter @mygpt/backend --filter @mygpt/frontend start",
+    "docker:infra": "docker compose up -d postgres redis",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down"
+  }
+}

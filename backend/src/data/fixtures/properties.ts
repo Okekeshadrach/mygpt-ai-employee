@@ -1,0 +1,108 @@
+import type { Property } from '../../verticals/real-estate/types';
+import type { Clock } from './clock';
+
+const K = 1_000;
+const M = 1_000_000;
+const sheet = 'Google Sheets · “Baycrest Listings 2026”';
+
+export const propertiesFixture = (t: Clock): Property[] => [
+  {
+    id: 'prop_1042', ref: 'BCR-1042', title: '4-bed Mediterranean home', listingType: 'sale', propertyType: 'Single-family home',
+    bedrooms: 4, bathrooms: 4, sizeSqft: 3450, hasGuestSuite: true, furnished: false,
+    amenities: ['Guest suite', 'Chef’s kitchen', 'Impact windows', 'Generator', '2-car garage'],
+    area: 'Coral Gables', estate: 'North Gables', city: 'Miami', price: 1.95 * M, currency: 'USD',
+    availability: 'available', availabilityConfirmedAt: t.ago({ d: 3 }), photo: '/properties/bcr-1042.jpg',
+    description: 'Renovated Mediterranean home six minutes from Coral Gables schools. Open living area, family room upstairs, detached guest suite.',
+    agentId: 'tm_james', owner: 'Private seller', source: sheet, updatedAt: t.ago({ d: 3 }),
+  },
+  {
+    id: 'prop_1037', ref: 'BCR-1037', title: '3-bed townhouse + guest suite', listingType: 'sale', propertyType: 'Townhouse',
+    bedrooms: 3, bathrooms: 3.5, sizeSqft: 2580, hasGuestSuite: true, furnished: false,
+    amenities: ['Guest suite', 'Community pool', 'Gym', 'Gated'],
+    area: 'South Miami', estate: 'Sunset Drive', city: 'Miami', price: 1.72 * M, currency: 'USD', hoaPerMonth: 600,
+    availability: 'available', availabilityConfirmedAt: t.ago({ d: 5 }), photo: '/properties/bcr-1037.jpg',
+    description: 'Bright end-unit townhouse in a quiet gated community with pool and gym. One of the lowest HOAs on Sunset Drive.',
+    agentId: 'tm_james', owner: 'Developer: Crestbay Homes', source: sheet, updatedAt: t.ago({ d: 5 }),
+  },
+  {
+    id: 'prop_1051', ref: 'BCR-1051', title: '4-bed home with garden & pool', listingType: 'sale', propertyType: 'Single-family home',
+    bedrooms: 4, bathrooms: 4, sizeSqft: 4400, hasGuestSuite: true, furnished: false,
+    amenities: ['Guest suite', 'Large garden', 'Pool', 'Solar panels'],
+    area: 'Coconut Grove', estate: 'Tigertail', city: 'Miami', price: 2.05 * M, currency: 'USD',
+    availability: 'available', availabilityConfirmedAt: t.ago({ d: 2 }), photo: '/properties/bcr-1051.jpg',
+    description: 'Family home on a 12,000 sq ft lot with a rare mature garden and pool, under oak canopy.',
+    agentId: 'tm_james', owner: 'Private seller', source: sheet, updatedAt: t.ago({ d: 2 }),
+  },
+  {
+    id: 'prop_1033', ref: 'BCR-1033', title: '4-bed townhouse', listingType: 'sale', propertyType: 'Townhouse',
+    bedrooms: 4, bathrooms: 3.5, sizeSqft: 3000, hasGuestSuite: true, furnished: false,
+    amenities: ['Guest suite', 'Pool', 'Gated'],
+    area: 'Pinecrest', estate: 'Pinecrest Village', city: 'Miami', price: 1.88 * M, currency: 'USD', hoaPerMonth: 900,
+    availability: 'available', availabilityConfirmedAt: t.ago({ d: 23 }), photo: '/properties/bcr-1033.jpg',
+    description: 'Modern townhouse with rooftop terrace and shared pool.',
+    agentId: 'tm_james', owner: 'Private seller', source: sheet, updatedAt: t.ago({ d: 23 }),
+  },
+  {
+    id: 'prop_1063', ref: 'BCR-1063', title: '4-bed penthouse condo', listingType: 'sale', propertyType: 'Condo',
+    bedrooms: 4, bathrooms: 4.5, sizeSqft: 3200, hasGuestSuite: true, furnished: false,
+    amenities: ['Bay views', 'Smart home', 'Private elevator', 'Pool'],
+    area: 'Brickell', estate: 'Brickell Key', city: 'Miami', price: 2.4 * M, currency: 'USD', hoaPerMonth: 1800,
+    availability: 'available', availabilityConfirmedAt: t.ago({ d: 1 }), photo: '/properties/bcr-1063.jpg',
+    description: 'Smart-home penthouse with wraparound terrace and private elevator, minutes from downtown.',
+    agentId: 'tm_oliver', owner: 'Richard Hughes (seller)', source: sheet, updatedAt: t.ago({ d: 1 }),
+  },
+  {
+    id: 'prop_1047', ref: 'BCR-1047', title: '3-bed single-story home with pool', listingType: 'sale', propertyType: 'Single-family home',
+    bedrooms: 3, bathrooms: 2, sizeSqft: 2260, hasGuestSuite: false, furnished: false,
+    amenities: ['Pool', 'Garden', 'Hurricane shutters'],
+    area: 'Kendall', estate: 'Kendall Lakes', city: 'Miami', price: 950 * K, currency: 'USD', hoaPerMonth: 250,
+    availability: 'available', availabilityConfirmedAt: t.ago({ d: 6 }), photo: '/properties/bcr-1047.jpg',
+    description: 'Single-level living with a private pool, ideal for first-time buyers.',
+    agentId: 'tm_james', owner: 'Private seller', source: sheet, updatedAt: t.ago({ d: 6 }),
+  },
+  {
+    id: 'prop_1018', ref: 'BCR-1018', title: '5-bed waterfront estate', listingType: 'sale', propertyType: 'Single-family home',
+    bedrooms: 5, bathrooms: 6, sizeSqft: 7000, hasGuestSuite: true, furnished: true,
+    amenities: ['Private dock', 'Pool', 'Elevator', 'Staff quarters', 'Bay views'],
+    area: 'Miami Beach', estate: 'Sunset Islands', city: 'Miami', price: 8.5 * M, currency: 'USD',
+    availability: 'under_offer', availabilityConfirmedAt: t.ago({ d: 1 }), photo: '/properties/bcr-1018.jpg',
+    description: 'Architect-designed waterfront home with a private dock on a quiet gated island.',
+    agentId: 'tm_oliver', owner: 'Private seller', source: sheet, updatedAt: t.ago({ d: 1 }),
+  },
+  {
+    id: 'prop_1029', ref: 'BCR-1029', title: '6-bed oceanfront estate', listingType: 'sale', propertyType: 'Single-family home',
+    bedrooms: 6, bathrooms: 7, sizeSqft: 9700, hasGuestSuite: true, furnished: true,
+    amenities: ['Pool', 'Beach access', 'Gym', 'Cinema'],
+    area: 'Key Biscayne', estate: 'Island Drive', city: 'Miami', price: 12 * M, currency: 'USD',
+    availability: 'available', availabilityConfirmedAt: t.ago({ d: 4 }), photo: '/properties/bcr-1029.jpg',
+    description: 'Trophy home with direct beach access and panoramic ocean views.',
+    agentId: 'tm_oliver', owner: 'Private seller', source: sheet, updatedAt: t.ago({ d: 4 }),
+  },
+  {
+    id: 'prop_1060', ref: 'BCR-1060', title: '3-bed furnished condo', listingType: 'rent', propertyType: 'Condo',
+    bedrooms: 3, bathrooms: 3, sizeSqft: 2050, hasGuestSuite: false, furnished: true,
+    amenities: ['Fully furnished', 'Pool', 'Gym', 'Concierge'],
+    area: 'Edgewater', estate: 'Biscayne Bay', city: 'Miami', price: 9500, pricePeriod: 'per_month', currency: 'USD',
+    availability: 'available', availabilityConfirmedAt: t.ago({ d: 2 }), photo: '/properties/bcr-1060.jpg',
+    description: 'Furnished bayfront condo with concierge, cleaning and utilities included.',
+    agentId: 'tm_emily', owner: 'Landlord: Mrs. Palmer', source: sheet, updatedAt: t.ago({ d: 2 }),
+  },
+  {
+    id: 'prop_1055', ref: 'BCR-1055', title: '2-bed apartment', listingType: 'rent', propertyType: 'Apartment',
+    bedrooms: 2, bathrooms: 2, sizeSqft: 1290, hasGuestSuite: false, furnished: false,
+    amenities: ['Parking', 'In-unit laundry', 'Doorman'],
+    area: 'Coral Gables', estate: 'Miracle Mile', city: 'Miami', price: 3800, pricePeriod: 'per_month', currency: 'USD',
+    availability: 'available', availabilityConfirmedAt: t.ago({ d: 4 }), photo: '/properties/bcr-1055.jpg',
+    description: 'Well-finished 2-bed with open-plan living, walking distance to Miracle Mile.',
+    agentId: 'tm_emily', owner: 'Landlord: Mr. Foster', source: sheet, updatedAt: t.ago({ d: 4 }),
+  },
+  {
+    id: 'prop_1024', ref: 'BCR-1024', title: '2-bed loft apartment', listingType: 'rent', propertyType: 'Apartment',
+    bedrooms: 2, bathrooms: 2, sizeSqft: 1020, hasGuestSuite: false, furnished: false,
+    amenities: ['Parking', 'Rooftop'],
+    area: 'Wynwood', estate: 'Midtown', city: 'Miami', price: 3200, pricePeriod: 'per_month', currency: 'USD',
+    availability: 'let', availabilityConfirmedAt: t.ago({ d: 9 }), photo: '/properties/bcr-1024.jpg',
+    description: 'Cozy loft near the Design District and Wynwood galleries.',
+    agentId: 'tm_emily', owner: 'Landlord: Elizabeth Shaw', source: sheet, updatedAt: t.ago({ d: 9 }),
+  },
+];

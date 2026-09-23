@@ -1,0 +1,43 @@
+# Hosting (Coolify "Docker Compose" build pack, or any Docker host).
+# One public URL: only the frontend is exposed; it proxies /api and /socket.io to the backend.
+# Runs on seeded demo data (USE_MOCK_DATA=true) — no Postgres/Redis needed for the pitch.
+#
+# Coolify: Build Pack = Docker Compose, compose path = /docker-compose.prod.yml.
+# Set a domain on the FRONTEND service only (e.g. https://demo.example.com:3000, or Generate Domain).
+# Keep `environment:` blocks in map form. Coolify breaks list-form entries with no value.
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      USE_MOCK_DATA: "true"
+      ENABLE_REDIS_ADAPTER: "false"
+      # Requests arrive via the frontend proxy (same origin), so allow any origin.
+      CORS_ORIGIN: "*"
+    expose:
+      - "4000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:4000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        BACKEND_INTERNAL_URL: http://backend:4000
+    environment:
+      NODE_ENV: production
+    expose:
+      - "3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped

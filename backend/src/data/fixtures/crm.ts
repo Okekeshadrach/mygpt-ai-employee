@@ -1,0 +1,196 @@
+import type { Customer, Lead } from '../../domain/types';
+import type { Clock } from './clock';
+
+const K = 1_000;
+const M = 1_000_000;
+
+export const HERO_CUSTOMER_ID = 'cus_hannah';
+export const HERO_LEAD_ID = 'lead_hannah';
+
+export const customersFixture = (t: Clock): Customer[] => [
+  {
+    id: HERO_CUSTOMER_ID, name: 'Hannah Brooks', phone: '+1 (305) ••• 7765', channel: 'whatsapp', customerType: 'buyer',
+    firstSeenAt: t.ago({ d: 26 }), lastInteractionAt: t.ago({ d: 12 }),
+    summary: 'Buying a family home with her husband. Wants to be near the children’s school in Coral Gables. Waiting on mortgage pre-approval. Put off by high HOA fees.',
+    preferences: ['3+ bedrooms', 'Coral Gables / South Miami', 'Low HOA', 'WhatsApp, evenings'],
+    memory: [
+      { id: 'mem_a1', at: t.ago({ d: 26 }), kind: 'conversation', title: 'First enquiry via website chat', detail: 'Asked about 3-bed homes near Coral Gables schools; left WhatsApp number.' },
+      { id: 'mem_a2', at: t.ago({ d: 26 }), kind: 'requirement', title: 'Requirements captured', detail: 'Buy · 3-bed · South Miami or Coral Gables · $1.5M–$1.8M' },
+      { id: 'mem_a3', at: t.ago({ d: 12 }), kind: 'conversation', title: 'Discussed BCR-1009 (Sunset Drive townhouse)', detail: 'Liked the layout; listing has since sold.' },
+      { id: 'mem_a4', at: t.ago({ d: 12 }), kind: 'objection', title: 'HOA fees too high', detail: '“$1,450 a month is a lot.” Wants lower-HOA communities.' },
+      { id: 'mem_a5', at: t.ago({ d: 12 }), kind: 'commitment', title: 'Will return after mortgage decision', detail: 'Said she’d talk to her husband and come back once the mortgage is sorted.' },
+    ],
+  },
+  {
+    id: 'cus_daniel', name: 'Daniel Wright', phone: '+1 (212) ••• 3120', channel: 'web_chat', customerType: 'buyer',
+    firstSeenAt: t.ago({ d: 9 }), lastInteractionAt: t.ago({ h: 2 }),
+    summary: 'Executive relocating from New York. Cash buyer, proof of funds shared. Wants a waterfront home in Miami Beach.',
+    preferences: ['5 bedrooms', 'Waterfront with dock', 'Move-in ready'],
+    memory: [
+      { id: 'mem_e1', at: t.ago({ d: 9 }), kind: 'conversation', title: 'Website chat enquiry', detail: 'Asked for waterfront homes with a dock in Miami Beach.' },
+      { id: 'mem_e2', at: t.ago({ d: 5 }), kind: 'viewing', title: 'Viewed BCR-1018', detail: 'First viewing with Oliver. Very positive.' },
+      { id: 'mem_e3', at: t.ago({ h: 2 }), kind: 'handoff', title: 'Escalated to Oliver', detail: 'Proof of funds shared; requested a second viewing with his wife.' },
+    ],
+  },
+  {
+    id: 'cus_chloe', name: 'Chloe Evans', phone: '+1 (404) ••• 8841', channel: 'whatsapp', customerType: 'tenant',
+    firstSeenAt: t.ago({ d: 2 }), lastInteractionAt: t.ago({ h: 5 }),
+    summary: 'Young professional relocating from Atlanta for a new job in Coral Gables. Needs a 2-bed by the end of the month.',
+    preferences: ['2 bedrooms', 'Coral Gables', '≤ $4,000/mo'],
+    memory: [
+      { id: 'mem_h1', at: t.ago({ d: 2 }), kind: 'requirement', title: 'Requirements captured', detail: 'Rent · 2-bed · Coral Gables · up to $4,000/mo · move by month end' },
+      { id: 'mem_h2', at: t.ago({ h: 5 }), kind: 'conversation', title: 'Matched BCR-1055', detail: 'Sent 2-bed near Miracle Mile; asked for photos of the kitchen.' },
+    ],
+  },
+  {
+    id: 'cus_thomas', name: 'Thomas Reed', phone: '+44 7700 ••• 214', channel: 'whatsapp', customerType: 'buyer',
+    firstSeenAt: t.ago({ d: 4 }), lastInteractionAt: t.ago({ d: 1 }),
+    summary: 'London-based engineer buying a Miami home for his retiring parents. Budget confirmed. Flying in next month.',
+    preferences: ['4 bedrooms', 'Coral Gables / Coconut Grove', 'Near a hospital'],
+    memory: [
+      { id: 'mem_c1', at: t.ago({ d: 4 }), kind: 'requirement', title: 'Requirements captured', detail: 'Buy · 4-bed · Coral Gables/Coconut Grove · $2.5M · UK time zone' },
+      { id: 'mem_c2', at: t.ago({ d: 1 }), kind: 'stage_change', title: 'Qualified', detail: 'Budget and cash funding confirmed.' },
+    ],
+  },
+  {
+    id: 'cus_richard', name: 'Richard Hughes', phone: '+1 (786) ••• 6619', channel: 'whatsapp', customerType: 'seller',
+    firstSeenAt: t.ago({ d: 41 }), lastInteractionAt: t.ago({ h: 20 }),
+    summary: 'Seller of BCR-1063 (Brickell Key penthouse). Listing has been live 41 days. Asked to lower the asking price.',
+    preferences: ['Quick sale', 'Calls after 6 PM'],
+    memory: [
+      { id: 'mem_k1', at: t.ago({ d: 41 }), kind: 'commitment', title: 'Exclusive listing agreement signed', detail: 'Listed at $2.4M.' },
+      { id: 'mem_k2', at: t.ago({ h: 20 }), kind: 'conversation', title: 'Voice note: price reduction', detail: '“Let’s bring it down to 2.25, I need to close before December.”' },
+    ],
+  },
+  {
+    id: 'cus_sophie', name: 'Sophie Harris', phone: '+1 (305) ••• 0937', channel: 'web_chat', customerType: 'buyer',
+    firstSeenAt: t.ago({ m: 38 }), lastInteractionAt: t.ago({ m: 31 }),
+    summary: 'New website visitor asking about pre-construction condos with deposit payment plans.',
+    preferences: ['Pre-construction', 'Payment plan'],
+    memory: [{ id: 'mem_i1', at: t.ago({ m: 38 }), kind: 'conversation', title: 'Website chat', detail: 'Asked if paying in installments is possible.' }],
+  },
+  {
+    id: 'cus_samuel', name: 'Samuel Green', phone: '+1 (305) ••• 4402', channel: 'referral', customerType: 'buyer',
+    firstSeenAt: t.ago({ d: 8 }), lastInteractionAt: t.ago({ d: 1 }),
+    summary: 'First-time buyer referred by a past client. Early stage, 6–12 month horizon.',
+    preferences: ['3 bedrooms', 'Kendall', '≤ $1M'],
+    memory: [{ id: 'mem_s1', at: t.ago({ d: 1 }), kind: 'conversation', title: 'Day-7 follow-up', detail: 'Still saving for a down payment; asked to check back in a month.' }],
+  },
+  {
+    id: 'cus_lucy', name: 'Lucy Walker', phone: '+1 (786) ••• 1188', channel: 'instagram', customerType: 'tenant',
+    firstSeenAt: t.ago({ h: 1 }), lastInteractionAt: t.ago({ m: 52 }),
+    summary: 'Came from an Instagram post. Interested in the Edgewater furnished condo for a 1-year corporate lease.',
+    preferences: ['Furnished', 'Edgewater'],
+    memory: [{ id: 'mem_g1', at: t.ago({ m: 52 }), kind: 'conversation', title: 'Instagram DM → WhatsApp', detail: 'Asked about BCR-1060 availability and what the rent includes.' }],
+  },
+  {
+    id: 'cus_elizabeth', name: 'Elizabeth Shaw', phone: '+1 (305) ••• 5561', channel: 'phone', customerType: 'landlord',
+    firstSeenAt: t.ago({ d: 60 }), lastInteractionAt: t.ago({ d: 3 }),
+    summary: 'Landlord with 3 condos in Wynwood under our management. Repeat client.',
+    preferences: ['Monthly statements'],
+    memory: [{ id: 'mem_b1', at: t.ago({ d: 3 }), kind: 'note', title: 'Asked for fee discount', detail: 'Wants 50% off the leasing fee on a new unit. Needs approval.' }],
+  },
+];
+
+export const leadsFixture = (t: Clock): Lead[] => [
+  {
+    id: HERO_LEAD_ID, customerId: HERO_CUSTOMER_ID, intent: 'buy', stage: 'nurturing', source: 'whatsapp',
+    budget: { min: 1.5 * M, max: 1.8 * M, currency: 'USD' }, locations: ['South Miami', 'Coral Gables'],
+    requirements: ['3+ bedrooms', 'Low HOA'], timeline: 'Within 3 months', financing: 'Mortgage application in progress',
+    interestedPropertyIds: [], objections: ['HOA too high ($1,450/mo on BCR-1009)'], assignedTo: 'tm_james',
+    nextAction: { label: 'Automatic day-14 follow-up: ask about mortgage progress', dueAt: t.ahead({ d: 2 }), owner: 'ai' },
+    priority: 'medium',
+    priorityEvidence: [{ label: 'Budget stated', detail: '$1.5M–$1.8M' }, { label: 'Financing pending', detail: 'Mortgage not yet approved' }],
+    aiSummary: 'Warm buyer, 3-bed near Coral Gables. Paused while the mortgage is processed; sensitive to HOA fees.',
+    humanNotes: ['Lovely family. Husband is an engineer at a hospital group. (James)'], appointments: [],
+    createdAt: t.ago({ d: 26 }), updatedAt: t.ago({ d: 12 }),
+  },
+  {
+    id: 'lead_daniel', customerId: 'cus_daniel', intent: 'buy', stage: 'viewing_scheduled', source: 'web_chat',
+    budget: { max: 9 * M, currency: 'USD' }, locations: ['Miami Beach'], requirements: ['5 bedrooms', 'Waterfront with dock', 'Move-in ready'],
+    timeline: 'Within 6 weeks', financing: 'Cash (proof of funds verified)', interestedPropertyIds: ['prop_1018'], objections: [],
+    assignedTo: 'tm_oliver',
+    nextAction: { label: 'Second viewing of BCR-1018 with spouse', dueAt: t.ahead({ d: 1, h: 3 }), owner: 'human', assigneeId: 'tm_oliver' },
+    priority: 'high',
+    priorityEvidence: [
+      { label: 'Proof of funds', detail: 'Bank letter shared 2h ago', source: 'WhatsApp attachment' },
+      { label: 'Second viewing requested', detail: 'Bringing spouse' },
+      { label: 'Timeline', detail: 'Relocating within 6 weeks' },
+    ],
+    aiSummary: 'Cash buyer, strong interest in BCR-1018 (currently under offer from another party). Oliver leading.',
+    humanNotes: [], appointments: [{ id: 'apt_e1', at: t.ahead({ d: 1, h: 3 }), title: 'Second viewing: BCR-1018', location: 'Sunset Islands, Miami Beach', withTeamMemberId: 'tm_oliver', status: 'confirmed' }],
+    createdAt: t.ago({ d: 9 }), updatedAt: t.ago({ h: 2 }),
+  },
+  {
+    id: 'lead_thomas', customerId: 'cus_thomas', intent: 'buy', stage: 'qualified', source: 'whatsapp',
+    budget: { max: 2.5 * M, currency: 'USD' }, locations: ['Coral Gables', 'Coconut Grove'], requirements: ['4 bedrooms', 'Near a hospital', 'Ground-floor bedroom'],
+    timeline: 'Buying on visit next month', financing: 'Cash (confirmed)', interestedPropertyIds: ['prop_1051', 'prop_1042'], objections: [],
+    assignedTo: 'tm_james',
+    nextAction: { label: 'Video walkthrough of BCR-1051 (UK evening)', dueAt: t.ahead({ d: 1 }), owner: 'human', assigneeId: 'tm_james' },
+    priority: 'high',
+    priorityEvidence: [{ label: 'Budget + funding confirmed', detail: '$2.5M cash' }, { label: 'Travel booked', detail: 'Arriving in Miami next month' }],
+    aiSummary: 'International cash buyer for his parents’ home. Needs a ground-floor bedroom. Prefers video calls in UK evenings.',
+    humanNotes: [], appointments: [], createdAt: t.ago({ d: 4 }), updatedAt: t.ago({ d: 1 }),
+  },
+  {
+    id: 'lead_chloe', customerId: 'cus_chloe', intent: 'rent', stage: 'qualified', source: 'whatsapp',
+    budget: { max: 4 * K, currency: 'USD' }, locations: ['Coral Gables'], requirements: ['2 bedrooms', 'Move by month end'],
+    timeline: 'This month', financing: 'Employer relocation package', interestedPropertyIds: ['prop_1055'], objections: [],
+    assignedTo: 'tm_emily',
+    nextAction: { label: 'Send kitchen photos of BCR-1055 and offer viewing', dueAt: t.ahead({ h: 1 }), owner: 'ai' },
+    priority: 'medium',
+    priorityEvidence: [{ label: 'Urgent timeline', detail: 'Must move by month end' }, { label: 'Matching listing', detail: 'BCR-1055 within budget' }],
+    aiSummary: 'Relocating professional with an employer package. Good fit for BCR-1055.', humanNotes: [], appointments: [],
+    createdAt: t.ago({ d: 2 }), updatedAt: t.ago({ h: 5 }),
+  },
+  {
+    id: 'lead_richard', customerId: 'cus_richard', intent: 'sell', stage: 'offer', source: 'whatsapp',
+    budget: { max: 2.4 * M, currency: 'USD' }, locations: ['Brickell'], requirements: ['Sell BCR-1063 before December'],
+    timeline: 'Before December', financing: 'n/a (seller)', interestedPropertyIds: ['prop_1063'], objections: ['No offers after 41 days'],
+    assignedTo: 'tm_oliver',
+    nextAction: { label: 'Owner approval: price change $2.4M → $2.25M', dueAt: t.ahead({ h: 4 }), owner: 'human', assigneeId: 'tm_sarah' },
+    priority: 'medium', priorityEvidence: [{ label: 'Seller instruction', detail: 'Voice note requesting price change' }],
+    aiSummary: 'Motivated seller, 41 days on market, 3 viewings, no offers. Price change awaiting owner approval.',
+    humanNotes: [], appointments: [], createdAt: t.ago({ d: 41 }), updatedAt: t.ago({ h: 20 }),
+  },
+  {
+    id: 'lead_lucy', customerId: 'cus_lucy', intent: 'rent', stage: 'new', source: 'instagram',
+    budget: { max: 10 * K, currency: 'USD' }, locations: ['Edgewater'], requirements: ['Furnished', '1-year corporate lease'],
+    timeline: 'Next 2 weeks', financing: 'Company-paid', interestedPropertyIds: ['prop_1060'], objections: [],
+    assignedTo: 'tm_emily',
+    nextAction: { label: 'Ask company name and move-in date', dueAt: t.ahead({ m: 20 }), owner: 'ai' },
+    priority: 'medium', priorityEvidence: [{ label: 'Matching listing', detail: 'BCR-1060 available' }],
+    aiSummary: 'Corporate lease enquiry from Instagram. Qualifying in progress.', humanNotes: [], appointments: [],
+    createdAt: t.ago({ h: 1 }), updatedAt: t.ago({ m: 52 }),
+  },
+  {
+    id: 'lead_sophie', customerId: 'cus_sophie', intent: 'buy', stage: 'qualifying', source: 'web_chat',
+    budget: { max: 800 * K, currency: 'USD' }, locations: ['Kendall', 'Edgewater'], requirements: ['Pre-construction', 'Deposit payment plan'],
+    timeline: 'Unknown', financing: 'Developer payment plan', interestedPropertyIds: [], objections: [],
+    assignedTo: 'tm_james',
+    nextAction: { label: 'Share pre-construction condos with deposit schedules', dueAt: t.ahead({ h: 2 }), owner: 'ai' },
+    priority: 'low', priorityEvidence: [{ label: 'Early stage', detail: 'Timeline not yet known' }],
+    aiSummary: 'New website lead exploring pre-construction with a payment plan.', humanNotes: [], appointments: [],
+    createdAt: t.ago({ m: 38 }), updatedAt: t.ago({ m: 31 }),
+  },
+  {
+    id: 'lead_samuel', customerId: 'cus_samuel', intent: 'buy', stage: 'nurturing', source: 'referral',
+    budget: { max: 1 * M, currency: 'USD' }, locations: ['Kendall'], requirements: ['3 bedrooms'],
+    timeline: '6–12 months', financing: 'Saving / mortgage later', interestedPropertyIds: ['prop_1047'], objections: ['Still saving for down payment'],
+    assignedTo: 'tm_james',
+    nextAction: { label: 'Automatic monthly check-in', dueAt: t.ahead({ d: 29 }), owner: 'ai' },
+    priority: 'low', priorityEvidence: [{ label: 'Long timeline', detail: '6–12 months' }],
+    aiSummary: 'Referral, first-time buyer, long horizon. Nurturing monthly.', humanNotes: [], appointments: [],
+    createdAt: t.ago({ d: 8 }), updatedAt: t.ago({ d: 1 }),
+  },
+  {
+    id: 'lead_elizabeth', customerId: 'cus_elizabeth', intent: 'lease out', stage: 'won', source: 'phone',
+    budget: { max: 3.2 * K, currency: 'USD' }, locations: ['Wynwood'], requirements: ['Manage 3 condos', 'New listing: 4th unit'],
+    timeline: 'Ongoing', financing: 'n/a (landlord)', interestedPropertyIds: ['prop_1024'], objections: ['Wants 50% leasing fee discount'],
+    assignedTo: 'tm_emily',
+    nextAction: { label: 'Owner decision on fee discount request', dueAt: t.ahead({ d: 1 }), owner: 'human', assigneeId: 'tm_sarah' },
+    priority: 'medium', priorityEvidence: [{ label: 'Repeat client', detail: '3 condos managed since last year' }],
+    aiSummary: 'Repeat landlord. New listing pending fee discount approval.', humanNotes: [], appointments: [],
+    createdAt: t.ago({ d: 60 }), updatedAt: t.ago({ d: 3 }),
+  },
+];
